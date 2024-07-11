@@ -7,4 +7,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
   standalone: true,
   imports: [LandingPageComponent]
 })
-export class AppComponent { }
+export class AppComponent {
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
+}

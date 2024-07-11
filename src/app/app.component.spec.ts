@@ -1,55 +1,29 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { TestBed } from '@angular/core/testing';
+import { AppComponent } from './app.component';
 
-@Component({
-  selector: 'app-landing-page',
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.css'],
-  standalone: true,
-  imports: [CommonModule, FormsModule]
-})
-export class LandingPageComponent implements AfterViewInit {
-  registration = {
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  };
+describe('AppComponent', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AppComponent],
+    }).compileComponents();
+  });
 
-  ngAfterViewInit() {
-    const images = document.querySelectorAll('.gallery .image');
-    images.forEach((image, index) => {
-      image.addEventListener('load', () => {
-        image.classList.add('loaded');
-      });
-      // Gerar preços aleatórios acima de 40 reais
-      const price = (Math.floor(Math.random() * 30) + 40).toFixed(2);
-      const priceElement = image.parentElement?.querySelector('.price') as HTMLElement;
-      if (priceElement) {
-        priceElement.textContent = R$ ${price};
-      }
-    });
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  });
 
-    const galleryContainer = document.querySelector('.gallery-container') as HTMLElement;
-    const prevButton = document.getElementById('prev') as HTMLButtonElement;
-    const nextButton = document.getElementById('next') as HTMLButtonElement;
+  it(`should have the 'faesa-landing-page' title`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('faesa-landing-page');
+  });
 
-    let scrollAmount = 0;
-    const scrollStep = 220; // Ajuste para o tamanho das imagens e o espaço entre elas
-
-    prevButton.addEventListener('click', () => {
-      scrollAmount += scrollStep;  // Mudei a direção aqui
-      galleryContainer.style.transform = translateX(${scrollAmount}px);
-    });
-
-    nextButton.addEventListener('click', () => {
-      scrollAmount -= scrollStep;  // Mudei a direção aqui
-      galleryContainer.style.transform = translateX(${scrollAmount}px);
-    });
-  }
-
-  onSubmit() {
-    alert(Obrigado pelo seu cadastro, ${this.registration.name}! Em breve entraremos em contato.);
-  }
-}
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, faesa-landing-page');
+  });
+});
